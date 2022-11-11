@@ -34,30 +34,35 @@ const submitHandler = () => {
 
 
 const addFortune = (body) => {
-    axios.post(`${baseURL}/api/fortune`, body)
+    axios.post(`${baseURL}/api/fortune`, body).then(res => alert('Fortune added.'))
 }
 
-const createFortuneCard = (Fortune) => {
+const createFortuneCard = (fortuneObj) => {
     const fortuneCard = document.createElement("div")
     document.querySelector('#fortunesContainer').appendChild(fortuneCard)
     fortuneCard.classList.add('fortuneCard')
 
-    fortuneCard.innerHTML = `<p>${Fortune}</p> <button onclick='deleteFortune("${Fortune}")'>delete</button> `
+    fortuneCard.innerHTML = `<p>${fortuneObj.fortune}</p> <button onclick='deleteFortune("${fortuneObj.id}")'>delete</button> <div class="likeCounter"><button onclick="updateCounter(${fortuneObj.id}, 'plus')">+</button><label for="likesCounter">Likes:</label><p class="likesCounter">${fortuneObj.likes}</p><button onclick="updateCounter(${fortuneObj.id}, 'minus')">-</button></div>`
+
+}
+
+const updateCounter = (id, type) => {
+    axios.put(`${baseURL}/api/fortune/${id}`, {type}).then(res => getAllFortunes())
 }
 
 const getAllFortunes = () => {
     document.querySelector('#fortunesContainer').innerHTML = ''
     axios.get(`${baseURL}/api/fortunes`)
         .then(res => {
-            fortunesArr = res.data
-            for (let i = 0; i < fortunesArr.length; i++) {
-                createFortuneCard(fortunesArr[i])
+            fortunes = res.data
+            for (let i = 0; i < fortunes.length; i++) {
+                createFortuneCard(fortunes  [i])
             }
         })
 }
 
-const deleteFortune = (fortunetxt) => {
-    axios.delete(`${baseURL}/api/fortune/${fortunetxt}`)
+const deleteFortune = (id) => {
+    axios.delete(`${baseURL}/api/fortune/${id}`)
         .then(res => getAllFortunes())
 }
 

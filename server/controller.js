@@ -1,9 +1,11 @@
+let globalId = 5
+
 const fortunes = [
-    'A friend asks only for your time not your money.',
-    'A friend is a present you give yourself.',
-    'A gambler not only will lose what he has, but also will lose what he doesn’t have.',
-    'A golden egg of opportunity falls into your lap this month.',
-    'A good friendship is often more important than a passionate romance.'
+    {id:0, likes: 0, fortune:'A friend asks only for your time not your money.'}, 
+    {id:1, likes: 0, fortune:'A friend is a present you give yourself.'}, 
+    {id:2, likes: 0, fortune:'A gambler not only will lose what he has, but also will lose what he doesn’t have.'}, 
+    {id:3, likes: 0, fortune:'A golden egg of opportunity falls into your lap this month.'}, 
+    {id:4, likes: 0, fortune:'A good friendship is often more important than a passionate romance.'}, 
 ]
 
 const compliments = [
@@ -32,10 +34,16 @@ module.exports = {
     },
 
     addFortune: (req, res) => {
-        let newFortune = req.body['newFortune']
+        let newFortune = {
+            id: globalId,
+            likes: 0,
+            fortune: req.body['newFortune']
+        }
+
         fortunes.push(newFortune)
 
-        res.status(200).send('Fortune sucesfully added')
+        ++globalId
+        res.sendStatus(200)
     },
 
     getAllFortunes: (req, res) => {
@@ -43,13 +51,31 @@ module.exports = {
     },
 
     deleteFortune: (req, res) => {
-        console.log(fortunes)
-        let fortuneToDelete = req.params.txt
-        let index = fortunes.indexOf(fortuneToDelete)
+        let idToDelete = req.params.id
+        console.log(idToDelete)
+            
+        let index  = fortunes.findIndex(fortune => +fortune.id === +idToDelete)
         fortunes.splice(index, 1)
-        
-        console.log(fortunes)
+
         res.status(200).send(fortunes)
+    },
+
+    updateCounter: (req, res) => {
+        let {id} = req.params
+        let {type} = req.body
+        
+        fortunes.forEach(el => {
+            if(+el.id === +id){
+                if(type === 'plus') {
+                    el.likes += 1
+                } else {
+                    el.likes -= 1
+                }
+            }
+        });
+
+
+        res.sendStatus(200)
     }
 
 }
