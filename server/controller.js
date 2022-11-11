@@ -40,6 +40,16 @@ module.exports = {
 
     getAllFortunes: (req, res) => {
         res.status(200).send(fortunes)
+    },
+
+    deleteFortune: (req, res) => {
+        console.log(fortunes)
+        let fortuneToDelete = req.params.txt
+        let index = fortunes.indexOf(fortuneToDelete)
+        fortunes.splice(index, 1)
+        
+        console.log(fortunes)
+        res.status(200).send(fortunes)
     }
 
 }

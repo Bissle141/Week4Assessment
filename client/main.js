@@ -1,6 +1,7 @@
 const complimentBtn = document.getElementById("complimentButton")
 const fortuneBtn = document.getElementById("fortuneButton")
 const addFortuneBtn = document.getElementById('addFortuneBtn')
+// const deleteForBtn = document.getElementsByClassName('.deleteBtn')
 
 const baseURL = 'http://localhost:4000'
 
@@ -36,21 +37,33 @@ const addFortune = (body) => {
     axios.post(`${baseURL}/api/fortune`, body)
 }
 
+const createFortuneCard = (Fortune) => {
+    const fortuneCard = document.createElement("div")
+    document.querySelector('#fortunesContainer').appendChild(fortuneCard)
+    fortuneCard.classList.add('fortuneCard')
+
+    fortuneCard.innerHTML = `<p>${Fortune}</p> <button onclick='deleteFortune("${Fortune}")'>delete</button> `
+}
+
 const getAllFortunes = () => {
+    document.querySelector('#fortunesContainer').innerHTML = ''
     axios.get(`${baseURL}/api/fortunes`)
         .then(res => {
             fortunesArr = res.data
             for (let i = 0; i < fortunesArr.length; i++) {
-                let node = document.createElement('p')
-                node.textContent = fortunesArr[i]
-                document.querySelector('#fortunesContainer').appendChild(node)
+                createFortuneCard(fortunesArr[i])
             }
         })
 }
 
+const deleteFortune = (fortunetxt) => {
+    axios.delete(`${baseURL}/api/fortune/${fortunetxt}`)
+        .then(res => getAllFortunes())
+}
+
+getAllFortunes()
 
 complimentBtn.addEventListener('click', getCompliment)
 fortuneBtn.addEventListener('click', getFortune)
 addFortuneBtn.addEventListener('click', submitHandler)
 
-getAllFortunes()
