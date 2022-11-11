@@ -34,7 +34,7 @@ const submitHandler = () => {
 
 
 const addFortune = (body) => {
-    axios.post(`${baseURL}/api/fortune`, body).then(res => alert('Fortune added.'))
+    axios.post(`${baseURL}/api/fortune`, body)
 }
 
 const createFortuneCard = (fortuneObj) => {
@@ -51,7 +51,7 @@ const updateCounter = (id, type) => {
 }
 
 const getAllFortunes = () => {
-    document.querySelector('#fortunesContainer').innerHTML = ''
+    document.querySelector('#fortunesContainer').innerHTML = '<h2>Fortunes:</h2>'
     axios.get(`${baseURL}/api/fortunes`)
         .then(res => {
             fortunes = res.data

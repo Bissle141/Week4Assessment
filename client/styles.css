@@ -1,0 +1,21 @@
+.fortuneCard {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin: 15px;
+}
+
+.fortuneCard > p {
+    margin: 10px;
+    padding: 10px;
+    background-color: bisque;
+}
+
+.likeCounter {
+    display: flex;
+    align-items: center;
+}
+
+.likeCounter * {
+    margin: 5px;
+}
