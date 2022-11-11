@@ -16,7 +16,6 @@ const getCompliment = () => {
 const getFortune = () => {
     axios.get(`${baseURL}/api/fortune`)
         .then(res => {
-            // console.log(res)
             const fortune = res.data
             alert(fortune)
         })

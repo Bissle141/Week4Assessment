@@ -25,10 +25,9 @@ module.exports = {
     },
 
     getFortune: (req, res) => {
-        console.log(req.data)
         //the fortune.length acts as a max value
         let randomIndex = Math.floor(Math.random() * fortunes.length)
-        let randomFortune = fortunes[randomIndex]
+        let randomFortune = fortunes[randomIndex].fortune
 
         res.status(200).send(randomFortune)
     },
