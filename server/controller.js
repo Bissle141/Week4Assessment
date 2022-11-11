@@ -1,6 +1,6 @@
 let globalId = 5
 
-const fortunes = [
+let fortunes = [
     {id:0, likes: 0, fortune:'A friend asks only for your time not your money.'}, 
     {id:1, likes: 0, fortune:'A friend is a present you give yourself.'}, 
     {id:2, likes: 0, fortune:'A gambler not only will lose what he has, but also will lose what he doesn’t have.'}, 
@@ -51,8 +51,7 @@ module.exports = {
 
     deleteFortune: (req, res) => {
         let idToDelete = req.params.id
-        console.log(idToDelete)
-            
+                    
         let index  = fortunes.findIndex(fortune => +fortune.id === +idToDelete)
         fortunes.splice(index, 1)
 
