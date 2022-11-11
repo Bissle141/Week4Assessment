@@ -13,8 +13,8 @@ const { getCompliment, getFortune, addFortune, getAllFortunes, deleteFortune, up
 app.get("/api/compliment", getCompliment);
 
 
-app.get('/api/fortune', getFortune)
 app.get('/api/fortunes', getAllFortunes)
+app.get('/api/fortune', getFortune)
 app.post('/api/fortune', addFortune)
 app.delete('/api/fortune/:id', deleteFortune)
 app.put('/api/fortune/:id', updateCounter)
