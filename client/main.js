@@ -34,7 +34,7 @@ const submitHandler = () => {
 
 const addFortune = (body) => {
     axios.post(`${baseURL}/api/fortune`, body)
-        .then(res => console.log(res)
+        .then(res => console.log(res.data)
     )
 }
 
